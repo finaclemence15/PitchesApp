@@ -14,6 +14,7 @@ class User(UserMixin,db.Model):
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
+    pitch = db.relationship('Pitch',backref = 'user',lazy="dynamic")
     
     def __repr__(self):
       return f'User {self.username}'
@@ -41,6 +42,7 @@ class Category(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     cat_name = db.Column(db.String(255))
+    pitch = db.relationship('Pitch',backref = 'category',lazy="dynamic") 
 
 
     def __repr__(self):
@@ -54,9 +56,9 @@ class Pitch(db.Model):
     pitch_title = db.Column(db.String)
     your_pitch = db.Column(db.String)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    category_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
-    category = db.relationship('Category',backref = 'role',lazy="dynamic") 
+    category_id = db.Column(db.Integer,db.ForeignKey("category.id"))
+    
+
        
     def save_pitch(self):
         db.session.add(self)
