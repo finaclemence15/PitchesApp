@@ -54,3 +54,36 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+
+#  
+@main.route('/category/pitch/new/<int:id>', methods = ['GET','POST'])
+@login_required
+def new_picth(id):
+    form = PitchForm()
+    category = get_category(id)
+
+    if form.validate_on_submit():
+        cat_name = form.cat_name.data
+        pitch = form.pitch.data
+        
+           # Updated review instance
+        new_pitch = Pitch(category_id=category.id,category_cat_name=cat_name,category_pitch=pitch,user=current_user)
+        # new_review = Review(movie.id,title,movie.poster,review)
+        # new_review.save_review()
+        # return redirect(url_for('movie',id = movie.id ))
+
+        # save review method
+        new_picth.save_pitch()
+        return redirect(url_for('.category',id = category.id ))
+
+    title = f'{category.title} pitch'
+    return render_template('new_pitch.html',title = title, pitch_form=form, category=category)
+
+@main.route('/pitch/<int:id>')
+def single_pitch(id):
+    pitch=Pitch.query.get(id)
+    if pitch is None:
+        abort(404)
+    format_pitch = markdown2.markdown(pitch.category_pitch,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch)
