@@ -34,6 +34,17 @@ class User(UserMixin,db.Model):
 
     def verify_password(self,password):
             return check_password_hash(self.pass_secure,password)
+    
+    
+class Category(db.Model):
+    __tablename__ = 'category'
+
+    id = db.Column(db.Integer,primary_key = True)
+    cat_name = db.Column(db.String(255))
+
+
+    def __repr__(self):
+        return f'User {self.cat_name}'    
 
 # class Review(db.Model):
 
@@ -57,16 +68,7 @@ class User(UserMixin,db.Model):
 #         return review
     
         
-# class Role(db.Model):
-#     __tablename__ = 'roles'
 
-#     id = db.Column(db.Integer,primary_key = True)
-#     name = db.Column(db.String(255))
-#     users = db.relationship('User',backref = 'role',lazy="dynamic")
-#     pass_secure = db.Column(db.String(255))
-
-#     def __repr__(self):
-#         return f'User {self.name}'
 
 
 
