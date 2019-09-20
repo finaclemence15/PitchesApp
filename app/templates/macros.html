@@ -1,0 +1,40 @@
+{% macro displayCategoryList(category_list) %}
+
+    {% for category in category_list %}
+        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+            <!-- <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="img-responsive"> -->
+            <li class="text-center">
+                <a href="/category/{{category.id}}">
+                    {{ category.cat_name|truncate(10)}}</a>
+            </li>
+        </div>
+
+    {% endfor %}
+
+{% endmacro %}
+<!-- Displaying reviews macro -->
+{% macro displayPitch(pitch_list) %}
+    {% for pitch in pitch_list %}
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+        <h2> {{ pitch.cat_name}} </h2>
+        <p> {{ pitch.pitch | truncate(30) }}</p>
+    </div>
+    {% endfor %}
+    {% macro displayPitch(pitch_list) %}
+
+    {% for pitch in pitch_list %}
+
+    <div class="row">
+
+      <div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
+        <h4>Writer</h4>
+        <p>{{pich.user.username}}</p>
+      </div>
+      <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+        <h2> <a href="{{url_for('main.single_review',id=review.id)}}">{{pitch.category_cat_name}}</a> </h2>
+      </div>
+    </div>
+
+    {% endfor %}
+{% endmacro %}
+{% endmacro %}

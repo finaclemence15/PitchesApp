@@ -28,7 +28,34 @@
                 <input type="submit"  value="Submit" class="btn btn-default">
             </form> -->
             <h1>Welcome to the Pitch Site</h1>
-        {% endblock%}    
+
+                   <!-- Popular movie section  -->
+       <h3> Education category</h3>
+       <ul>
+            {{ macro.displayCategoryList(Education )}}
+        </ul>
+       <!-- <ul>
+          {% for popular_movie in popular %}
+              <li>{{ popular_movie.title}}</li>
+          {% endfor %}
+      </ul> -->
+       <!-- Upcoming movie  -->
+       <h3> Technology category </h3>
+        <ul>
+            {{ macro.displayCategoryList(Technology)}}
+        </ul>
+       <!-- <ul>
+          {% for upcoming_movie in upcoming %}
+              <li>{{ upcoming_movie.title}}</li>
+          {% endfor %}
+      </ul> -->
+      <!-- Now showing movie -->
+      <h3>Business</h3>
+        <ul>
+            {{ macro.displayCategoryList(Business)}}
+        </ul>
         </div>
+        {% endblock%}    
+      
     </body>
 </html
