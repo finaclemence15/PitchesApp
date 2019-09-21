@@ -28,6 +28,7 @@ def create_app(config_name):
     # configure UploadSet
     configure_uploads(app,photos)
     mail.init_app(app)
+    
 
     # Initializing flask extensions
     bootstrap.init_app(app)
@@ -41,8 +42,12 @@ def create_app(config_name):
     # setting config
     # from .request import configure_request
     # configure_request(app)
+            # 
+    # Regestering the auth bluprint
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-
+            # 
     # Will add the views and forms
 
     return app

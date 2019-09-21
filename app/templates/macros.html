@@ -1,40 +1,52 @@
-{% macro displayCategoryList(category_list) %}
+{% macro display(category_list) %}
+<div class="row">
+	{% if category_list %}
+		{% for category in category_list %}
+		<div class="col-md-6">
+			<div class="thumbnail text-center">
+			<h5 class="card-header">{{category.title}}</h5>
+			<h5 class="card-header">{{category.category}}</h5>
+			<div class="card-body">
+				<blockquote class="blockquote mb-0">
+					<h2>{{category.description}}</h2>
+					<footer class="blockquote-footer"> Posted by {{category.user.username}}</footer>
+				</blockquote>
+				
+				<a href="{{url_for('main.new_comment',pitch_id = category.id)}}" class="btn btn-info"> Add a comment</a>
+				<a href="{{url_for('main.upvote',pitch_id = category.id)}}" class= "btn btn-primary btn-sm"><i></i>Upvote <span>{{category.upvotes.count()}}</span></a>
+				<a href="{{url_for('main.downvote',pitch_id = category.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-up"></i>Downvote <span>{{category.downvotes.count()}}</span></a>
 
-    {% for category in category_list %}
-        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
-            <!-- <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="img-responsive"> -->
-            <li class="text-center">
-                <a href="/category/{{category.id}}">
-                    {{ category.cat_name|truncate(10)}}</a>
-            </li>
-        </div>
 
-    {% endfor %}
+			</div>
+		</div>
 
+		</div>
+		{% endfor %}
+	{% else %}
+	{% endif %}
+</div>
 {% endmacro %}
-<!-- Displaying reviews macro -->
-{% macro displayPitch(pitch_list) %}
-    {% for pitch in pitch_list %}
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
-        <h2> {{ pitch.cat_name}} </h2>
-        <p> {{ pitch.pitch | truncate(30) }}</p>
-    </div>
-    {% endfor %}
-    {% macro displayPitch(pitch_list) %}
 
-    {% for pitch in pitch_list %}
 
-    <div class="row">
 
-      <div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
-        <h4>Writer</h4>
-        <p>{{pich.user.username}}</p>
-      </div>
-      <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
-        <h2> <a href="{{url_for('main.single_review',id=review.id)}}">{{pitch.category_cat_name}}</a> </h2>
-      </div>
-    </div>
+{% macro displayComment(comments) %}
+<ul>
 
-    {% endfor %}
-{% endmacro %}
+			{% if comments %}
+			{% for comment in comments %}
+				<div class="row text-center">
+						<a><p style="color: brown">{{ comment.description }}</p></a>
+						<small> posted by {{comment.user.username}}</small>
+				</div>
+			{% endfor %}
+			{% else %}
+
+			<h3>This post does  not does not have any comments yet !</h3>
+			{%endif%}
+
+	</ul>
+	
+			
+
+
 {% endmacro %}

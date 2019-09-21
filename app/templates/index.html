@@ -13,49 +13,18 @@
         {% endif %}
     </head>
     <body>
-        <!-- Styles block -->
-
-        {% block styles%}
-        {{ super() }}
-        <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
-        {% endblock %} 
-
-        <!-- Content block -->
-        {% block content %}
-        <div class="container">
-            <!-- <form>
-                <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
-                <input type="submit"  value="Submit" class="btn btn-default">
-            </form> -->
-            <h1>Welcome to the Pitch Site</h1>
-
-                   <!-- Popular movie section  -->
-       <h3> Education category</h3>
-       <ul>
-            {{ macro.displayCategoryList(Education )}}
-        </ul>
-       <!-- <ul>
-          {% for popular_movie in popular %}
-              <li>{{ popular_movie.title}}</li>
-          {% endfor %}
-      </ul> -->
-       <!-- Upcoming movie  -->
-       <h3> Technology category </h3>
-        <ul>
-            {{ macro.displayCategoryList(Technology)}}
-        </ul>
-       <!-- <ul>
-          {% for upcoming_movie in upcoming %}
-              <li>{{ upcoming_movie.title}}</li>
-          {% endfor %}
-      </ul> -->
-      <!-- Now showing movie -->
-      <h3>Business</h3>
-        <ul>
-            {{ macro.displayCategoryList(Business)}}
-        </ul>
-        </div>
-        {% endblock%}    
-      
+        <div class="container-fluid welcome-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 welcome">
+                        {% if current_user.is_authenticated%}
+                        <a id="start" class="btn btn-danger animated infinite flash" href="{{url_for('home.index')}}">See all Pitches</a>
+                        {% else %}
+                        <a id="start" class="btn btn-danger animated infinite flash" href="{{url_for('auth.login')}}">Sign In</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div> 
     </body>
 </html
