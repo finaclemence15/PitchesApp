@@ -1,45 +1,51 @@
  
-{% include 'navbar.html'%}
-
-{% import 'bootstrap/wtf.html' as wtf %}
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html'%}
 {% import 'macros.html' as macro %}
+{% import "bootstrap/wtf.html" as wtf %}
+
 
 {% block content %}
-
-
-        
-        
-<div class="row">
-                <div class="card">
-                                <div class="card-body text-center">
-                                <h4><a>{{pitch.title}}</a></h4>
-                                  <h5 class="card-text text-center">{{pitch.description}}.</h5>
-                                </div>
+<div class="container">
+    <div class="card">
+        <div class="media-body">
+            <div class="row">
+                <div class="col-md-2 img-responsive">
+                    {% if pitch.user.profile_pic_path %}
+                     <p>
+                         <img src="{{url_for('static',filename = pitch.user.profile_pic_path)}}" alt="" class="img-thumbnail rounded-circle">
+                         <!-- <a href="/user/{{pitch.user.username}}&{{pitch.user.id}}">{{pitch.user.username|capitalize}}</a> -->
+                     </p>
+                     {% else %}
+                     <p>
+                         <img src="{{url_for('static',filename = 'photos/avatar.jpg')}}" alt="" class="img-thumbnail rounded-circle">
+                         <!-- <a href="/user/{{pitch.user.username}}&{{pitch.user.id}}">{{pitch.user.username|capitalize}}</a> -->
+                     </p>
+                     {% endif %}
                 </div>
+                <div class="col-md-10">
+                    <p class="pitch-metadata">
+                        <h3 class="inline"><a class="pitch-title" href="#">{{pitch.pitch_title}}</a></h3>
+                        <small class="text-muted">  Posted on {{pitch.posted.strftime('%d/%m/%Y')}} | {{pitch.category}}</small>
 
 
-                <div class="container">
-                                <div class="row">
-                                        <div class="jumbotron">
-                                                {{wtf.quick_form(form)}}
-                                        </div>
-                                </div>
-                        </div>
-                        
-<hr><hr>
-        <div class="container">
-                <div class="col-md-12">
-                        <h4 style="color: brown; text-align: center;text-underline-position: below">Comments</h4>
-                        {{ macro.displayComment(comment) }}
-
+                        <hr>
+                    </p>
+                    <p class="pitch-content">{{pitch.content}}</p>
+                    <small class="text-muted">
+                     <p class="mr-2">-Author {{pitch.user.username}}</p>
+                    </small>
+                    <p class="pitchback">  <a href="/"> Back to pitches </a> </p>
                 </div>
-                 
+            </div>
         </div>
-        
+
+    </div>
+    <div class="col-md-4">
+        {{ wtf.quick_form(comment_form)}}
+    </div>
+    <div class="something">
+         {{macro.displayComments(comment)}}
+    </div>
 </div>
 
-
-
-	
 {% endblock %}
