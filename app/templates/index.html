@@ -13,7 +13,7 @@
         {% endif %}
     </head>
     <body>
-        <div class="container-fluid welcome-page">
+        <!-- <div class="container-fluid welcome-page">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 welcome">
@@ -25,6 +25,188 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>  -->
+<!-- Content block -->
+{% block content %}
+
+    <title> {{ title }} </title>
+
+    <div class="landing-page">
+
+    </div>
+
+
+
+
+    <div class="container wrapper">
+
+
+
+        <ul class="nav nav-tabs nav-tabs-right" id="myTab" role="tablist">
+            <span class="inline heading">
+                <h3>One Minute Pitch</h3>
+            </span>
+          <li class="nav-item">
+            <a class="nav-link active" id="interview-tab" data-toggle="tab" href="#interview" role="tab" aria-controls="interview" aria-selected="true">Interview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="product-tab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="false">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="promotion-tab" data-toggle="tab" href="#promotion" role="tab" aria-controls="promotion" aria-selected="false">Promotion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="business-tab" data-toggle="tab" href="#business" role="tab" aria-controls="business" aria-selected="false">Business</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="interview" role="tabpanel" aria-labelledby="interview-tab">
+
+              <section>
+                 <div class="intro">
+                      <div class="pl-heroleft feature content ">
+                        <div id="">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="img-responsive thumbnail interview" src="" alt="Interview Pitches"></div>
+                                </div>
+                                <div class="block col-md-4">
+                                    <h3 class="kicker ga-click">Interview Pitch</h3>
+                                    <p>Take a minute to provide an interview pitch that will land you your dream job. Read and comment on other pitches as well.</p>
+                                    <div class="byline">
+                                            <small class="text-muted">Posted by Admin</small>
+                                            <br>
+                                            <!-- <small class="text-muted">1 minute read</small> -->
+                                            <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                    </div>
+                </div>
+                  <div class="content" id="Interview">
+
+                      <div class="tab-content">
+                          <div class="Pitch">
+                              {{macro.displayPitches(interviewpitches)}}
+
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+          <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="product-tab">
+
+              <section>
+                  <div class="intro">
+                       <div class="pl-heroleft feature content ">
+                         <div id="">
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <div class="img-responsive thumbnail product" src="" alt="Product Pitches"></div>
+                                 </div>
+                                 <div class="block col-md-4">
+                                     <h3 class="kicker ga-click">Product Pitch</h3>
+                                     <p>Take a minute to provide a product pitch that will get your customers attention. Read and comment on other pitches as well.</p>
+                                     <div class="byline">
+                                             <small class="text-muted">Posted by Admin</small>
+                                             <br>
+                                             <!-- <small class="text-muted">1 minute read</small> -->
+                                             <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
+                                     </div>
+                                 </div>
+                             </div>
+
+                         </div>
+                     </div>
+                 </div>
+                  <div class="content" id="Product">
+                      <div class="tab-content">
+                          <div class="Pitch">
+                              {{macro.displayPitches(productpitches)}}
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+          <div class="tab-pane fade" id="promotion" role="tabpanel" aria-labelledby="promotion-tab">
+
+              <section>
+                  <div class="intro">
+                       <div class="pl-heroleft feature content ">
+                         <div id="">
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <div class="img-responsive thumbnail promotion" src="" alt="Promotion Pitches"></div>
+                                 </div>
+                                 <div class="block col-md-4">
+                                     <h3 class="kicker ga-click">Promotion Pitch</h3>
+                                     <p>Take a minute to provide an promotion pitch that will help people land that big promotion. Read and comment on other pitches as well.</p>
+                                     <div class="byline">
+                                             <small class="text-muted">Posted by Admin</small>
+                                             <br>
+                                             <!-- <small class="text-muted">1 minute read</small> -->
+                                             <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
+                                     </div>
+                                 </div>
+                             </div>
+
+                         </div>
+                     </div>
+                 </div>
+                  <div class="content" id="Promotion">
+                      <div class="tab-content">
+                          <div class="Pitch">
+                              {{macro.displayPitches(promotionpitches)}}
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+
+
+          <div class="tab-pane fade" id="business" role="tabpanel" aria-labelledby="business-tab">
+
+              <section>
+                  <div class="intro">
+                       <div class="pl-heroleft feature content ">
+                         <div id="">
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <div class="img-responsive thumbnail business" src="" alt="Business Pitches"></div>
+                                 </div>
+                                 <div class="block col-md-4">
+                                     <h3 class="kicker ga-click">Business Pitch</h3>
+                                     <p>Take a minute to provide an busiess pitch to get any serious inverstor interested in what you do. Read and comment on other pitches as well.</p>
+                                     <div class="byline">
+                                             <small class="text-muted">Posted by Admin</small>
+                                             <br>
+                                             <!-- <small class="text-muted">1 minute read</small> -->
+                                             <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
+                                     </div>
+                                 </div>
+                             </div>
+
+                         </div>
+                     </div>
+                 </div>
+                  <div class="content" id="Business">
+                      <div class="tab-content">
+                          <div class="Pitch">
+                              {{macro.displayPitches(businesspitches)}}
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}        
     </body>
 </html

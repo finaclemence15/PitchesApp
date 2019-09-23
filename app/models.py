@@ -58,14 +58,17 @@ class Pitch(db.Model):
     # user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     # category_id = db.Column(db.Integer,db.ForeignKey("category.id"))
                     # 
-    id = db.Column(db.Integer, primary_key = True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
-    description = db.Column(db.String(), index = True)
-    title = db.Column(db.String())
-    category = db.Column(db.String(255), nullable=False)
-    comments = db.relationship('Comment',backref='pitch',lazy='dynamic')
-    upvotes = db.relationship('Upvote', backref = 'pitch', lazy = 'dynamic')
-    downvotes = db.relationship('Downvote', backref = 'pitch', lazy = 'dynamic')
+    id = db.Column(db.Integer,primary_key = True)
+    pitch_title = db.Column(db.String())
+    content = db.Column(db.String())
+    category = db.Column(db.String())
+    posted = db.Column(db.DateTime,default=datetime.utcnow)
+
+    author = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+    comments = db.relationship('Comment',backref = 'pitch',lazy = "dynamic")
+    upvotes = db.relationship('Like',backref = 'pitch',lazy = "dynamic")
+    downvotes = db.relationship('Dislike',backref = 'pitch',lazy = "dynamic")
                     # 
 
        
@@ -75,7 +78,7 @@ class Pitch(db.Model):
 
     @classmethod
     def get_pitch(cls,id):
-        pitch = Pitch.query.filter_by(category_id=id).all()
+        pitches = Pitch.query.filter_by(category_id=id).all()
         return pitch
     
         
@@ -85,9 +88,9 @@ class Comment(db.Model):
     __tablename__='comments'
     
     id = db.Column(db.Integer,primary_key=True)
-    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable= False)
-    description = db.Column(db.Text)
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comment_content = db.Column(db.String())
 
     
     def __repr__(self):
