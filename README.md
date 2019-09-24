@@ -1,4 +1,4 @@
-## News Highlights
+## PitchesApp
 
 An application that helps people to post their one minutes pitches and other people will be able to see the pitches and comment on it and upvote or downvote 
 
