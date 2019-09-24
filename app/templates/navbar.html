@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/css?family=Turret+Road&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Covered+By+Your+Grace|Turret+Road&display=swap" rel="stylesheet">
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -12,15 +14,16 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
+                <li><a href="/" style="color: #F7F9F9 ; font-size: 30px; font-family: 'Turret Road', cursive;">Home</a></li>
         </div>
+        <h1 style="text-align: center;font-family: 'Covered By Your Grace'; color:#F7F9F9; font-size: 50px; ">welcome to the Pitches Site</h1>
         <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
-            <li style="color:white;padding:15px;">{{current_user.username}}</li>
-            <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
-            <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+            <li style="color:white;padding:15px;color: #F7F9F9;font-size: 20px; font-family: 'Turret Road', cursive;" >{{current_user.username}}</li>
+            <li><a href="{{url_for('main.profile',uname=current_user.username)}}" style="color: #F7F9F9; font-size: 20px; font-family: 'Turret Road', cursive;">Profile</a></li>
+            <li><a href="{{url_for('auth.logout')}}" style="color: #F7F9F9;font-size: 20px; font-family: 'Turret Road', cursive;">Sign out</a></li>
             {% else %}
-            <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
+            <li><a href="{{url_for('auth.login')}}" style="color: #F7F9F9;font-size: 20px; font-family: 'Turret Road', cursive;">Sign in</a></li>
             {%endif%}
         </ul>        
 
