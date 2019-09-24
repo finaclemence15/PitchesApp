@@ -1,50 +1,15 @@
-<!-- <h1> Hello World </h1> -->
-<!-- <h1> {{ message }} </h1> -->
-{% extends 'base.html'%}
-{% import 'macros.html' as macro%}
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        {% if title %}
-        <title> {{ title }}</title>
-        {% else %}
-        <title> Welcome to the Pitches  website </title>
-        {% endif %}
-    </head>
-    <body>
-        <!-- <div class="container-fluid welcome-page">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 welcome">
-                        {% if current_user.is_authenticated%}
-                        <a id="start" class="btn btn-danger animated infinite flash" href="{{url_for('home.index')}}">See all Pitches</a>
-                        {% else %}
-                        <a id="start" class="btn btn-danger animated infinite flash" href="{{url_for('auth.login')}}">Sign In</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>  -->
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
 <!-- Content block -->
 {% block content %}
 
     <title> {{ title }} </title>
 
-    <div class="landing-page">
-
-    </div>
-
-
-
-
-    <div class="container wrapper">
-
-
+    <div class="container ">
 
         <ul class="nav nav-tabs nav-tabs-right" id="myTab" role="tablist">
             <span class="inline heading">
-                <h3>One Minute Pitch</h3>
+                <h3>Pitch Category</h3>
             </span>
           <li class="nav-item">
             <a class="nav-link active" id="interview-tab" data-toggle="tab" href="#interview" role="tab" aria-controls="interview" aria-selected="true">Interview</a>
@@ -76,7 +41,6 @@
                                     <div class="byline">
                                             <small class="text-muted">Posted by Admin</small>
                                             <br>
-                                            <!-- <small class="text-muted">1 minute read</small> -->
                                             <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
                                         </div>
                                     </div>
@@ -113,7 +77,6 @@
                                      <div class="byline">
                                              <small class="text-muted">Posted by Admin</small>
                                              <br>
-                                             <!-- <small class="text-muted">1 minute read</small> -->
                                              <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
                                      </div>
                                  </div>
@@ -147,7 +110,6 @@
                                      <div class="byline">
                                              <small class="text-muted">Posted by Admin</small>
                                              <br>
-                                             <!-- <small class="text-muted">1 minute read</small> -->
                                              <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
                                      </div>
                                  </div>
@@ -181,9 +143,8 @@
                                      <h3 class="kicker ga-click">Business Pitch</h3>
                                      <p>Take a minute to provide an busiess pitch to get any serious inverstor interested in what you do. Read and comment on other pitches as well.</p>
                                      <div class="byline">
-                                             <small class="text-muted">Posted by Admin</small>
                                              <br>
-                                             <!-- <small class="text-muted">1 minute read</small> -->
+                                             <small class="text-muted">1 minute read</small>
                                              <p class="post"><a href="/pitch/new"><i class="fas fa-plus"></i> Add a Pitch</a></p>
                                      </div>
                                  </div>
@@ -203,10 +164,4 @@
           </div>
         </div>
     </div>
-
-
-
-
-{% endblock %}        
-    </body>
-</html
+{% endblock %}

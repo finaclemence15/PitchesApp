@@ -1,38 +1,59 @@
-from flask import render_template,request,redirect,url_for,abort
+from flask import render_template,request,redirect,url_for,abort,session
 from . import main
-# from ..request import get_movies,get_movie,search_movie
-from .forms import PitchForm,UpdateProfile, CommentForm
-# from .forms import UpdateProfile
-from .. import db,photos
-from ..models import User, Pitch,Category,Comment,Upvote,Downvote
-from flask_login import login_required,current_user
-import markdown2 
+from .forms import UpdateProfile, PitchForm, CommentForm
+from ..models import User, Role, Pitch, Comment, Like, Dislike
+from flask_login import login_required, current_user
+from .. import db, photos
 from sqlalchemy import func
 from sqlalchemy.orm import session
 
-@main.route('/')
+# Views
+@main.route('/',methods = ['GET', 'POST'])
 def index():
+
     '''
     View root page function that returns the index page and its data
     '''
-    
     interviewpitches = Pitch.query.filter_by(category="Interview-Pitch").order_by(Pitch.posted.desc()).all()
     productpitches = Pitch.query.filter_by(category="Product-Pitch").order_by(Pitch.posted.desc()).all()
     promotionpitches = Pitch.query.filter_by(category="Promotion-Pitch").order_by(Pitch.posted.desc()).all()
     businesspitches = Pitch.query.filter_by(category="Business-Pitch").order_by(Pitch.posted.desc()).all()
 
     pitches = Pitch.query.filter_by().first()
-    upvotes = Upvote.get_all_upvotes(pitch_id=Pitch.id)
-    downvotes = Downvote.get_all_downvotes(pitch_id=Pitch.id)
-    
+    likes = Like.get_all_likes(pitch_id=Pitch.id)
+    dislikes = Dislike.get_all_dislikes(pitch_id=Pitch.id)
 
-    title = 'Welcome to the Pitches  website'
 
-    return render_template('index.html', title = title)
+    title = 'Welcome to the Pitch Site'
+    return render_template('index.html', title = title, pitch = pitch, interviewpitches = interviewpitches, productpitches = productpitches, promotionpitches = promotionpitches, businesspitches = businesspitches, likes=likes, dislikes=dislikes)
+
+
+
+@main.route('/user/<uname>')
+def profile(uname):
+    '''
+    View profile page function that returns the profile page and its data
+    '''
+    user = User.query.filter_by(username = uname).first()
+    title = f"{uname.capitalize()}'s Profile"
+
+    get_pitches = Pitch.query.filter_by(author = User.id).all()
+    get_comments = Comment.query.filter_by(user_id = User.id).all()
+    get_upvotes = Like.query.filter_by(user_id = User.id).all()
+    get_downvotes = Dislike.query.filter_by(user_id = User.id).all()
+
+    if user is None:
+        abort (404)
+
+    return render_template("profile/profile.html", user = user, title=title, pitches_no = get_pitches, comments_no = get_comments, likes_no = get_upvotes, dislikes_no = get_downvotes)
+
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
+    '''
+    View update profile page function that returns the update profile page and its data
+    '''
     user = User.query.filter_by(username = uname).first()
     if user is None:
         abort(404)
@@ -49,72 +70,20 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form)
 
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
+
+@main.route('/user/<uname>/update/pic',methods=['POST'])
 @login_required
 def update_pic(uname):
+    '''
+    View update pic profile function that returns the uppdate profile pic page
+    '''
     user = User.query.filter_by(username = uname).first()
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
         path = f'photos/{filename}'
         user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile',uname=uname))
-
-
-
-
-# #  
-# @main.route('/category/pitch/new/<int:id>', methods = ['GET','POST'])
-# @login_required
-# def new_picth(id):
-#     form = PitchForm()
-#     category = get_category(id)
-
-#     if form.validate_on_submit():
-#         cat_name = form.cat_name.data
-#         pitch = form.pitch.data
-        
-#            # Updated review instance
-#         new_pitch = Pitch(category_id=category.id,category_cat_name=cat_name,category_pitch=pitch,user=current_user)
-#         # new_review = Review(movie.id,title,movie.poster,review)
-#         # new_review.save_review()
-#         # return redirect(url_for('movie',id = movie.id ))
-
-#         # save review method
-#         new_picth.save_pitch()
-#         return redirect(url_for('.category',id = category.id ))
-
-#     title = f'{category.title} pitch'
-#     return render_template('new_pitch.html',title = title, pitch_form=form, category=category)
-
-# @main.route('/pitch/<int:id>')
-# def single_pitch(id):
-#     pitch=Pitch.query.get(id)
-#     if pitch is None:
-#         abort(404)
-#     format_pitch = markdown2.markdown(pitch.category_pitch,extras=["code-friendly", "fenced-code-blocks"])
-#     return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch)
-
-
-@main.route('/user/<uname>')
-def profile(uname):
-    '''
-    View profile page function that returns the profile page and its data
-    '''
-    user = User.query.filter_by(username = uname).first()
-    title = f"{uname.capitalize()}'s Profile"
-
-    get_pitches = Pitch.query.filter_by(author = User.id).all()
-    get_comments = Comment.query.filter_by(user_id = User.id).all()
-    get_upvotes = Upvote.query.filter_by(user_id = User.id).all()
-    get_downvotes = Downvote.query.filter_by(user_id = User.id).all()
-
-    if user is None:
-        abort (404)
-
-    return render_template("profile/profile.html", user = user, title=title, pitches_no = get_pitches, comments_no = get_comments, upvotes_no = get_upvotes, downvotes_no = get_downvotes)
-
-
+    return redirect(url_for('main.profile', uname=uname))
 
 
 
@@ -132,7 +101,7 @@ def home():
     pitch = Pitch.get_all_pitches()
     # print(all_pitches)
 
-    title = 'Home | One Min Pitch'
+    title = 'Welcome to the Pitch Site'
     return render_template('home.html', title = title, pitch = pitch, interviewpitches = interviewpitches, productpitches = productpitches, promotionpitches = promotionpitches, businesspitches = businesspitches)
 
 
@@ -156,8 +125,8 @@ def pitch():
         return redirect(url_for('main.index'))
 
 
-    title = 'New Pitch | One Minute Pitch'
-    return render_template('pitch.html', title = title, pitch_form = pitch_form, upvotes = my_likes)
+    title = 'New Pitch | Welcome to the Pitch Site'
+    return render_template('pitch.html', title = title, pitch_form = pitch_form, likes = my_likes)
 
 
 @main.route('/pitch/<int:pitch_id>/comment',methods = ['GET', 'POST'])
@@ -184,7 +153,7 @@ def comment(pitch_id):
     all_comments = Comment.query.filter_by(pitch_id=pitch_id).all()
     # all_comments = Comment.get_all_comments(id)
     # all_comments = Comment.get_all_comments(pitch_id)
-    title = 'New Comment | One Min Pitch'
+    title = 'New Comment | Welcome to the Pitch Site'
 
     return render_template('comment.html', title = title, pitch=my_pitch ,comment_form = comment_form, comment = all_comments )
 
@@ -192,41 +161,41 @@ def comment(pitch_id):
 
 
 
-@main.route('/pitch/<int:pitch_id>/upvote',methods = ['GET','POST'])
+@main.route('/pitch/<int:pitch_id>/like',methods = ['GET','POST'])
 @login_required
-def upvote(pitch_id):
+def like(pitch_id):
     '''
-    View upvote function that returns likes
+    View like function that returns likes
     '''
     my_pitch = Pitch.query.get(pitch_id)
     user = current_user
 
-    pitch_upvotes = Upvote.query.filter_by(pitch_id=pitch_id)
+    pitch_likes = Like.query.filter_by(pitch_id=pitch_id)
 
 
-    if Upvote.query.filter(Upvote.user_id==user.id,Upvote.pitch_id==pitch_id).first():
+    if Like.query.filter(Like.user_id==user.id,Like.pitch_id==pitch_id).first():
         return  redirect(url_for('.index'))
 
-    new_upvote = Upvote(pitch_id=pitch_id, user = current_user)
-    new_upvote.save_upvotes()
+    new_like = Like(pitch_id=pitch_id, user = current_user)
+    new_like.save_likes()
     return redirect(url_for('.index'))
 
 
 
-@main.route('/pitch/<int:pitch_id>/downvote',methods = ['GET','POST'])
+@main.route('/pitch/<int:pitch_id>/dislike',methods = ['GET','POST'])
 @login_required
-def downvote(pitch_id):
+def dislike(pitch_id):
     '''
-    View downvote function that returns dislikes
+    View dislike function that returns dislikes
     '''
     my_pitch = Pitch.query.get(pitch_id)
     user = current_user
 
-    pitch_downvotes = Downvote.query.filter_by(pitch_id=pitch_id)
+    pitch_dislikes = Dislike.query.filter_by(pitch_id=pitch_id)
 
-    if Downvote.query.filter(Downvote.user_id==user.id,Downvote.pitch_id==pitch_id).first():
+    if Dislike.query.filter(Dislike.user_id==user.id,Dislike.pitch_id==pitch_id).first():
         return redirect(url_for('.index'))
 
-    new_downvote = Downvote(pitch_id=pitch_id, user = current_user)
-    new_downvote.save_dislikes()
+    new_dislike = Dislike(pitch_id=pitch_id, user = current_user)
+    new_dislike.save_dislikes()
     return redirect(url_for('.index'))
