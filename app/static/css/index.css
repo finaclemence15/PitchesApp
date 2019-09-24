@@ -65,10 +65,10 @@ a.nav-item.nav-link.brand.opaque:hover{
     color: #544a4a;
 }
 
-/* Landing Page
+/* Landing Page */
 .landing-page{
 
-} */
+}
 .wrapper{
     padding-top: 30px;
 }
@@ -224,4 +224,4 @@ img.img-thumbnail.rounded-circle.comment{
 }
 .pitchback{
     font-size: 12px;
-}
+}    

@@ -1,3 +1,5 @@
+
+
 from flask import render_template,request,redirect,url_for,abort,session
 from . import main
 from .forms import UpdateProfile, PitchForm, CommentForm
@@ -24,7 +26,7 @@ def index():
     dislikes = Dislike.get_all_dislikes(pitch_id=Pitch.id)
 
 
-    title = 'Welcome to the Pitch Site'
+    title = 'Home | Welcome To pitch App'
     return render_template('index.html', title = title, pitch = pitch, interviewpitches = interviewpitches, productpitches = productpitches, promotionpitches = promotionpitches, businesspitches = businesspitches, likes=likes, dislikes=dislikes)
 
 
@@ -101,7 +103,7 @@ def home():
     pitch = Pitch.get_all_pitches()
     # print(all_pitches)
 
-    title = 'Welcome to the Pitch Site'
+    title = 'Home | Welcome To pitch App'
     return render_template('home.html', title = title, pitch = pitch, interviewpitches = interviewpitches, productpitches = productpitches, promotionpitches = promotionpitches, businesspitches = businesspitches)
 
 
@@ -125,7 +127,7 @@ def pitch():
         return redirect(url_for('main.index'))
 
 
-    title = 'New Pitch | Welcome to the Pitch Site'
+    title = 'New Pitch | Welcome To pitch App'
     return render_template('pitch.html', title = title, pitch_form = pitch_form, likes = my_likes)
 
 
@@ -153,7 +155,7 @@ def comment(pitch_id):
     all_comments = Comment.query.filter_by(pitch_id=pitch_id).all()
     # all_comments = Comment.get_all_comments(id)
     # all_comments = Comment.get_all_comments(pitch_id)
-    title = 'New Comment | Welcome to the Pitch Site'
+    title = 'New Comment | Welcome To pitch App'
 
     return render_template('comment.html', title = title, pitch=my_pitch ,comment_form = comment_form, comment = all_comments )
 

@@ -32,15 +32,9 @@
                                 <div class="comments">
 
                                     <a href="{{url_for('main.comment',pitch_id=pitch.id)}}" class= "btn btn-primary btn-sm"><i class="fas fa-comment"></i> Comment</a>
-                                    <a href="{{url_for('main.like',pitch_id=pitch.id)}}" class= "btn btn-success btn-sm"><i class="far fa-thumbs-up"></i>Like <span class="likes">{{pitch.likes.count()}}</span></a>
+                                    <a href="{{url_for('main.like',pitch_id=pitch.id)}}" class= "btn btn-success btn-sm"><i class="far fa-thumbs-up"></i>Upvote <span class="likes">{{pitch.likes.count()}}</span></a>
 
-                                    <a href="{{url_for('main.dislike',pitch_id=pitch.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-down"></i>Dislike <span class="dislikes">{{pitch.dislikes.count()}}</span></a>
-
-
-                                    <!-- <form>
-                                       <a href=# id=like><button class='btn btn-success'>Like</button></a><span id="likes"></span>
-                                       <a href=# id=tes><button class='btn btn-danger'>Dislike</button></a><span id="unlikes"></span>
-                                    </form> -->
+                                    <a href="{{url_for('main.dislike',pitch_id=pitch.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-down"></i>Downvote <span class="dislikes">{{pitch.dislikes.count()}}</span></a>
 
                                 </div>
 
