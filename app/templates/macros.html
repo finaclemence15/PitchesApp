@@ -21,20 +21,26 @@
                             </div>
                             <div class="col-md-10">
                                 <p class="pitch-metadata">
-                                    <h3 class="inline"><a class="pitch-title" href="#">{{pitch.pitch_title}}</a></h3>
+                                    <h3 class="inline"><a class="pitch-title" href="#"  style="font-family: 'Turret Road', cursive; font-size: 30px;">{{pitch.pitch_title}}</a></h3>
                                     <small class="text-muted">  Posted on {{pitch.posted.strftime('%d/%m/%Y')}} | {{pitch.category}}</small>
                                     <hr>
                                 </p>
-                                <p class="pitch-content">{{pitch.content}}</p>
+                                <p class="pitch-content" style="font-family: 'Roboto Condensed', sans-serif;font-size: 20px;">{{pitch.content}}</p>
                                 <small class="text-muted">
                                  <a class="mr-2" href="#">-Author {{pitch.user.username}}</a>
                                 </small>
                                 <div class="comments">
 
                                     <a href="{{url_for('main.comment',pitch_id=pitch.id)}}" class= "btn btn-primary btn-sm"><i class="fas fa-comment"></i> Comment</a>
-                                    <a href="{{url_for('main.like',pitch_id=pitch.id)}}" class= "btn btn-success btn-sm"><i class="far fa-thumbs-up"></i>Upvote <span class="likes">{{pitch.likes.count()}}</span></a>
+                                    <a href="{{url_for('main.like',pitch_id=pitch.id)}}" class= "btn btn-success btn-sm"><i class="far fa-thumbs-up"></i>Like <span class="likes">{{pitch.likes.count()}}</span></a>
 
-                                    <a href="{{url_for('main.dislike',pitch_id=pitch.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-down"></i>Downvote <span class="dislikes">{{pitch.dislikes.count()}}</span></a>
+                                    <a href="{{url_for('main.dislike',pitch_id=pitch.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-down"></i>Dislike <span class="dislikes">{{pitch.dislikes.count()}}</span></a>
+
+
+                                    <!-- <form>
+                                       <a href=# id=like><button class='btn btn-success'>Like</button></a><span id="likes"></span>
+                                       <a href=# id=tes><button class='btn btn-danger'>Dislike</button></a><span id="unlikes"></span>
+                                    </form> -->
 
                                 </div>
 
@@ -58,27 +64,26 @@
 
         {% for comment in all_comments%}
         
-
+ 
 
         <div class="row">
 
-
                     {% if comment.user.profile_pic_path %}
                      <p>
-                         <img src="{{url_for('static',filename = comment.user.profile_pic_path)}}" alt="" class="img-thumbnail rounded-circle comment">
+                         <img src="{{url_for('static',filename = comment.user.profile_pic_path)}}" alt="" class="img-thumbnail rounded-circle comment" width="50" height="50">
 
                      </p>
                      {% else %}
                      <p>
-                         <img src="{{url_for('static',filename = 'photos/avatar.jpg')}}" alt="" class="img-thumbnail rounded-circle comment">
+                         <img src="{{url_for('static',filename = 'photos/avatar.jpg')}}" alt="" class="img-thumbnail rounded-circle comment" width="50" height="50">
 
                      </p>
                      {% endif %}
 
 
                     <div class="media-body">
-                        <a class="mr-2" href="#">{{comment.user.username}}</a>
-                        <p class="pitch-content">{{comment.comment_content}}</p>
+                        <a class="mr-2" href="#" style="font-family: 'Turret Road', cursive; font-size: 30px;">{{comment.user.username}}</a>
+                        <p class="pitch-content" style="font-family: 'Roboto Condensed', sans-serif;font-size: 20px;">{{comment.comment_content}}</p> <br>
 
                     </div>
 
